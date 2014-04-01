@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<definitions name="BlendokuService"
+    targetNamespace="urn:Blendoku"
+     xmlns:tns="urn:Blendoku"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns="http://schemas.xmlsoap.org/wsdl/">
+ 
+  <message name="BlendokuPeticion">
+    <part name="operando1" type="xsd:float" />
+    <part name="operando2" type="xsd:float" />
+  </message>
+ 
+  <message name="BlendokuRespuesta">
+    <part name="respuesta" type="xsd:float" />
+  </message>
+ 
+  <portType name="BlendokuPort">
+    <operation name="restar">
+      <input message="tns:BlendokuPeticion" />
+      <output message="tns:BlendokuRespuesta" />
+    </operation>
+  </portType>
+ 
+  <binding name="BlendokuBinding" type="tns:BlendokuPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />    
+    <operation name="restar">
+        <soap:operation soapAction="urn:Blendoku#restar" />
+        <input>
+          <soap:body use="encoded" namespace="urn:Blendoku"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />       
+        </input>
+        <output>
+          <soap:body use="encoded" namespace="urn:Blendoku"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />       
+        </output>
+    </operation>
+  </binding>
+ 
+<service name="BlendokuServicio">
+  <port name="BlendokuPort" binding="tns:BlendokuBinding">
+    <soap:address location="http://localhost/blendokuGitHub/webService/blendoku_server.php" />
+  </port>
+</service>
+</definitions>
